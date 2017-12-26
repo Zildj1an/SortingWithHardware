@@ -22,9 +22,6 @@ architecture sortARCH of sort is
          debug_we : in STD_LOGIC;
 			control : in std_logic_vector(6 downto 0); 
 			status : out std_logic_vector(2 downto 0)
-			  -- PART 3
-			  -- in_counter: in STD_LOGIC;
-			  -- clear_counter: in STD_LOGIC;
 			);
 	end component datapath;
 
@@ -33,16 +30,13 @@ architecture sortARCH of sort is
 				rst_n : in  STD_LOGIC;
            	init : in  STD_LOGIC;
            	done : out  STD_LOGIC;
-				control: out std_logic_vector(6 downto 0); --para facilitar el paso de señales
+				control: out std_logic_vector(6 downto 0); --para facilitar el paso de seÃ±ales
 				status : in std_logic_vector(2 downto 0) --cmpi_i, cmp_j, cmp_mem se guardan aqui
-				 -- PART 3
-			   -- in_counter: out STD_LOGIC;
-			   -- clear_counter: out STD_LOGIC;
 				);
 	end component controller;
 	
 signal control: std_logic_vector(6 downto 0);
-signal status: std_logic_vector(2 downto 0); --señales intermedias entre ambos componentes de sort
+signal status: std_logic_vector(2 downto 0); --seÃ±ales intermedias entre ambos componentes de sort
 
 begin
 	
