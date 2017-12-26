@@ -11,9 +11,6 @@ entity datapath is
          debug_we : in STD_LOGIC;
 			control : in std_logic_vector(6 downto 0);
 			status : out std_logic_vector(2 downto 0));
-			-- PART 3
-			-- in_counter: in STD_LOGIC;
-		   -- clear_counter: in STD_LOGIC;
 end datapath;
 
 
@@ -27,13 +24,6 @@ architecture dataARCH of datapath is
 			initial : in std_logic_vector(4 downto 0);
 			output: inout std_logic_vector (4 downto 0));
 	end component;
-	
--- PARTE 3
- -- component counterClk 
- --	generic (n: integer := 8);
- --	port (clk, reset, count: in std_logic;
- --				output: out std_logic_vector (n-1 downto 0));
- --end component;
 	
 	component comparator
 	port (A : in std_logic_vector(31 downto 0);
@@ -73,7 +63,7 @@ architecture dataARCH of datapath is
 	alias firstWeb: std_logic is control(6);		
 	
 	
-	--Señales intermedias
+	--SeÃ±ales intermedias
 	
 	signal contadorDei, contadorDeJ : std_logic_vector(4 downto 0);
 	signal aux_rst : std_logic;
@@ -86,17 +76,9 @@ architecture dataARCH of datapath is
 
 begin
 	
-	aux_rst <= not rst_n; --Señal intermedia
+	aux_rst <= not rst_n; --SeÃ±al intermedia
 	my_counter_j: counter
 		port map(clk,aux_rst,control_ce_j,control_loaderj,"00000",contadorDeJ
-					);
-	--PART 3
--- auxcounterClk <= in_counter;
--- auxcounterClk2 <= clear_counter
- -- my_counter: counterClk 
- --	generic (n: integer := 8);
- --	port (clk, auxcounterClk2 , auxcounterClk , output);
- --end counter;
 	
 	my_counter_i: counter -- Asigno todas
 		port map(clk,aux_rst,control_ce_i,control_loader,"00000",contadorDei);
@@ -123,39 +105,3 @@ begin
 	theMemCmp <= '1' when biggerThan = DOUTA_as else '0';
 	
 end dataARCH;
-
--- El componente del contador sería asi: 
---library IEEE;
---use IEEE.STD_LOGIC_1164.ALL;
---use IEEE.NUMERIC_STD.ALL;
---
---entity counter is
---	generic (n: integer := 8);
---	port (clk, reset, count: in std_logic;
---				output: out std_logic_vector (n-1 downto 0));
---end counter;
---
---architecture ARCH of counter is
---
---signal aux_output: unsigned(n-1 downto 0);
---
---begin
---
---	output <= std_logic_vector(aux_output);
---
---	process(clk, reset)
---	begin
---	 if reset ='1' then
---		aux_output <= (others => '0');
---	 elsif clk'event and clk = '1' then
---		if count = '1' then
---			aux_output <= aux_output + 1;
---		else
---			aux_output <= aux_output;
---		end if;
---	 end if; 
---	end process;
---	
---	
---
---end ARCH;
