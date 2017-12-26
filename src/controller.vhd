@@ -7,12 +7,9 @@ entity controller is
 	Port (  clk : in  STD_LOGIC;
            rst_n : in  STD_LOGIC;
            init : in  STD_LOGIC;
-           done : out  STD_LOGIC; --para saber cuando comienza la ejecuciÛn
+           done : out  STD_LOGIC; --para saber cuando comienza la ejecuci√≥n
 			  control: out std_logic_vector(6 downto 0); --los controles (de i, de j)
 			  status : in std_logic_vector(2 downto 0) -- para guardar los registros y el comparador
-			  -- PART 3
-			  -- in_counter: out STD_LOGIC;
-			  -- clear_counter: out STD_LOGIC;
 	);
 end controller;
 
@@ -22,7 +19,7 @@ architecture controllerARCH of controller is
 	--ESTADOS
 	signal reset : std_logic;	
 	alias cntri_ld: std_logic is control(0); -- Creo alias para facilitar
-	alias cntrj_ld: std_logic is control(1); -- la sintaxis que emplearÈ abajo
+	alias cntrj_ld: std_logic is control(1); -- la sintaxis que emplear√© abajo
 	alias cntri_ce: std_logic is control(2);
 	alias cntrj_ce: std_logic is control(3);
 	alias debug_mode: std_logic is control(4);
@@ -64,17 +61,12 @@ reset <= not rst_n;
 				when inicioial => --Done y debug_mode a 1
 					done <= '1'; -- debug mode es uno para introducir
 					debug_mode <= '1'; -- en la BRAM 	
-					
-					--PARTE 3
-					-- Cleared y swapped a 1
-					if (init = '1') then --Comienza la ejecuciÛn, nos vamos de inicioial			
+					if (init = '1') then --Comienza la ejecuci√≥n, nos vamos de inicioial			
 						NEXT_STATE <= inicio;
 					else
-						NEXT_STATE <= inicioial; -- Aun no ha comenzado la ejedcuciÛn
+						NEXT_STATE <= inicioial; -- Aun no ha comenzado la ejedcuci√≥n
 					end if;
 				when inicio =>
-					--PARTE 3
-					-- Increment counter
 					cntri_ld <= '1';
 					NEXT_STATE <= compareFirst;
 				when compareFirst => --Aqui comparo para el loop mayor con i 
@@ -86,8 +78,6 @@ reset <= not rst_n;
 						NEXT_STATE <= ceroAJota;
 				end if;
 				when ceroAJota =>
-					--PARTE 3
-								-- Increment counter
 					cntrj_ld <= '1';
 					NEXT_STATE <= menorQue;	
 				when menorQue =>
@@ -98,11 +88,9 @@ reset <= not rst_n;
 					else
 						NEXT_STATE <= leeBRAM;
 					end if;
-				when leeBRAM =>		
-								--PARTE 3
-								-- Increment counter				
+				when leeBRAM =>						
 					NEXT_STATE <= menorQue2;
-				when menorQue2 => --Con cmp_mem reviso la comparaciÛn
+				when menorQue2 => --Con cmp_mem reviso la comparaci√≥n
 						--PARTE 3
 								-- Increment counter
 					if (cmp_mem = '1') then
@@ -123,13 +111,9 @@ reset <= not rst_n;
 					cntrj_ce <= '1'; 
 					NEXT_STATE <= menorQue;
 				when Ssumai => --Sumo al registro con count enable de control i 		  
-					--PARTE 3
-					-- Increment counter
 					cntri_ce <= '1';
 					NEXT_STATE <= compareFirst;
 					
-			end case;
---PARTE 3: Se modificarÌa el cmp para que fuera mas eficiente
--- esto es, j < n - 1 - i	
+			end case;	
 		end process;
 end controllerARCH;
