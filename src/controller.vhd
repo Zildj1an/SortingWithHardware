@@ -105,9 +105,7 @@ reset <= not rst_n;
 					web <= '1';
 					NEXT_STATE <= unoAJota;
 				
-				when unoAJota =>	 --Aqui comparo para el loop mayor con j	
-							--PARTE 3
-								-- Increment counter				
+				when unoAJota =>	 --Aqui comparo para el loop mayor con j				
 					cntrj_ce <= '1'; 
 					NEXT_STATE <= menorQue;
 				when Ssumai => --Sumo al registro con count enable de control i 		  
